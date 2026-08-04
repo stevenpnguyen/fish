@@ -24,12 +24,14 @@ def init():
         pygame.image.load("images/ocean.png").convert(), (WIDTH, HEIGHT)
     )
     fox = Actor("penguin")
-    fox.pos = (500, 300)
+    fox.pos = (875, 300)
     fish = Actor("fish")
     fish.pos = (random.randint(0, 1750), random.randint(500, 1000))
     fish2 = Actor("fish2")
     fish2.pos = (random.randint(0, 1750), random.randint(500, 1000))
     trophy = Actor("trophy")
+    clock.schedule(hide_fish, 5.0)
+    clock.schedule(hide_fish2, 3.0)
 
 
 def draw():
@@ -37,8 +39,10 @@ def draw():
         init()
     screen.blit(bg, (0, 0))
     fox.draw()
-    fish.draw()
-    fish2.draw()
+    if fish.x != -1000:
+        fish.draw()
+    if fish2.x != -1000:
+        fish2.draw()
     screen.draw.text("money:  " + str(money), color="black", bottomleft=(10, 990))
     if clicked:
         screen.draw.text(message, (300, 10), fontsize=30, color="black")
@@ -55,6 +59,26 @@ def update():
         fox.x += 5
     elif keyboard.left:
         fox.x -= 5
+
+
+def hide_fish():
+    fish.x = -1000
+    clock.schedule(show_fish, 2.0)
+
+
+def hide_fish2():
+    fish2.x = -1000
+    clock.schedule(show_fish2, 2.0)
+
+
+def show_fish():
+    fish.pos = (random.randint(0, 1750), random.randint(500, 1000))
+    clock.schedule(hide_fish, 5.0)
+
+
+def show_fish2():
+    fish2.pos = (random.randint(0, 1750), random.randint(500, 1000))
+    clock.schedule(hide_fish2, 3.0)
 
 
 def hide_text():
@@ -76,20 +100,20 @@ def on_mouse_down(pos):
     if fish2.collidepoint(pos):
         money = money + 250
         fish2.pos = (random.randint(10, 1740), random.randint(340, 990))
-        if money >= 500:
-            clicked = True
-            clock.schedule(hide_text, 3.0)
-            add_trophy()
-            show_trophy = True
-        if money >= 1000:
-            clicked = True
-            clock.schedule(hide_text, 3.0)
-            add_trophy()
         if money >= 5000:
             clicked = True
             clock.schedule(hide_text, 3.0)
             add_trophy()
-        if money >= 10000:
+            show_trophy = True
+        if money >= 50000:
+            clicked = True
+            clock.schedule(hide_text, 3.0)
+            add_trophy()
+        if money >= 500000:
+            clicked = True
+            clock.schedule(hide_text, 3.0)
+            add_trophy()
+        if money >= 1000000:
             clicked = True
             clock.schedule(hide_text, 3.0)
             add_trophy()
@@ -97,20 +121,20 @@ def on_mouse_down(pos):
     if fish.collidepoint(pos):
         money = money + 100
         fish.pos = (random.randint(10, 1740), random.randint(340, 990))
-        if money == 500:
+        if money >= 5000:
             clicked = True
             clock.schedule(hide_text, 3.0)
             add_trophy()
             show_trophy = True
-        if money == 1000:
+        if money >= 50000:
             clicked = True
             clock.schedule(hide_text, 3.0)
             add_trophy()
-        if money == 5000:
+        if money >= 500000:
             clicked = True
             clock.schedule(hide_text, 3.0)
             add_trophy()
-        if money == 10000:
+        if money >= 1000000:
             clicked = True
             clock.schedule(hide_text, 3.0)
             add_trophy()
