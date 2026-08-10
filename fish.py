@@ -14,6 +14,9 @@ message = "You have unlocked this achievement"
 show_trophy = False
 bg = pygame.transform.scale(pygame.image.load("images/ocean.png").convert(), (WIDTH, HEIGHT))
 first_trophy = False
+second_trophy = False
+third_trophy = False
+fourth_trophy = False
 fox = Actor("penguin")
 fox.pos = (875, 300)
 fish = Actor("fish")
@@ -86,6 +89,9 @@ def on_mouse_down(pos):
     global show_trophy
     global trophy_no
     global first_trophy
+    global second_trophy
+    global third_trophy
+    global fourth_trophy
     if fish2.collidepoint(pos):
         money = money + (random.randint(50, 500))
         fish2.pos = (random.randint(10, 1740), random.randint(340, 990))
@@ -97,35 +103,57 @@ def on_mouse_down(pos):
                 first_trophy = True
                 show_trophy = True
         if money >= 50000:
-            clicked = True
-            clock.schedule(hide_text, 3.0)
-            add_trophy()
+            if not second_trophy:
+                clicked = True
+                clock.schedule(hide_text, 3.0)
+                add_trophy()
+                second_trophy = True
+                show_trophy = True
         if money >= 500000:
-            clicked = True
-            clock.schedule(hide_text, 3.0)
-            add_trophy()
+            if not third_trophy:
+                clicked = True
+                clock.schedule(hide_text, 3.0)
+                add_trophy()
+                third_trophy = True
+                show_trophy = True
         if money >= 1000000:
-            clicked = True
-            clock.schedule(hide_text, 3.0)
-            add_trophy()
+            if not fourth_trophy:
+                clicked = True
+                clock.schedule(hide_text, 3.0)
+                add_trophy()
+                fourth_trophy = True
+                show_trophy = True
     if fish.collidepoint(pos):
         money = money + (random.randint(25, 350))
         fish.pos = (random.randint(10, 1740), random.randint(340, 990))
         if money >= 5000:
-            clicked = True
-            clock.schedule(hide_text, 3.0)
-            add_trophy()
-            first_trophy = True
-            show_trophy = True
+            if not first_trophy:
+                clicked = True
+                clock.schedule(hide_text, 3.0)
+                add_trophy()
+                first_trophy = True
+                show_trophy = True
         if money >= 50000:
-            clicked = True
-            clock.schedule(hide_text, 3.0)
+            if not second_trophy:
+                clicked = True
+                clock.schedule(hide_text, 3.0)
+                add_trophy()
+                second_trophy = True
+                show_trophy = True
         if money >= 500000:
-            clicked = True
-            clock.schedule(hide_text, 3.0)
+            if not third_trophy:
+                clicked = True
+                clock.schedule(hide_text, 3.0)
+                add_trophy()
+                third_trophy = True
+                show_trophy = True
         if money >= 1000000:
-            clicked = True
-            clock.schedule(hide_text, 3.0)
+            if not fourth_trophy:
+                clicked = True
+                clock.schedule(hide_text, 3.0)
+                add_trophy()
+                fourth_trophy = True
+                show_trophy = True
 
 clock.schedule(hide_fish, 5.0)
 clock.schedule(hide_fish2, 3.0)
