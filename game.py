@@ -5,7 +5,7 @@ WIDTH = 1750
 HEIGHT = 1000
 CENTRE_X = WIDTH / 2
 CENTRE_Y = HEIGHT / 2
-money = 10
+money = 0
 clicked = False
 message = "You have unlocked this achievement"
 show_trophy = False
@@ -16,6 +16,7 @@ fish = None
 fish2 = None
 trophy = None
 trophy_no = 0
+first_trophy = False
 
 
 def init():
@@ -43,11 +44,11 @@ def draw():
         fish.draw()
     if fish2.x != -1000:
         fish2.draw()
-    screen.draw.text("money:  " + str(money), color="black", bottomleft=(10, 990))
+    screen.draw.text("money:  " + str(money), color="green", bottomleft=(10, 990))
     if clicked:
         screen.draw.text(message, (300, 10), fontsize=30, color="black")
     if show_trophy:
-        trophy_x = 950
+        trophy_x = 1700
         for no in range(trophy_no):
             trophy.draw()
             trophy.pos = (trophy_x, 50)
@@ -59,6 +60,10 @@ def update():
         fox.x += 5
     elif keyboard.left:
         fox.x -= 5
+    elif keyboard.down:
+        fox.y += 5
+    fish.x -= 1
+    fish2.x -= 2
 
 
 def hide_fish():
@@ -91,20 +96,27 @@ def add_trophy():
     trophy_no = trophy_no + 1
 
 
+def hide_trophy():
+    show_trophy = False
+
+
 def on_mouse_down(pos):
     global money
     global message
     global clicked
     global show_trophy
     global trophy_no
+    global first_trophy
     if fish2.collidepoint(pos):
-        money = money + 250
+        money = money + (random.randint(50, 500))
         fish2.pos = (random.randint(10, 1740), random.randint(340, 990))
         if money >= 5000:
-            clicked = True
-            clock.schedule(hide_text, 3.0)
-            add_trophy()
-            show_trophy = True
+            if not first_trophy:
+                clicked = True
+                clock.schedule(hide_text, 3.0)
+                add_trophy()
+                first_trophy = True
+                show_trophy = True
         if money >= 50000:
             clicked = True
             clock.schedule(hide_text, 3.0)
@@ -119,22 +131,20 @@ def on_mouse_down(pos):
             add_trophy()
 
     if fish.collidepoint(pos):
-        money = money + 100
+        money = money + (random.randint(25, 350))
         fish.pos = (random.randint(10, 1740), random.randint(340, 990))
         if money >= 5000:
             clicked = True
             clock.schedule(hide_text, 3.0)
             add_trophy()
+            first_trophy = True
             show_trophy = True
         if money >= 50000:
             clicked = True
             clock.schedule(hide_text, 3.0)
-            add_trophy()
         if money >= 500000:
             clicked = True
             clock.schedule(hide_text, 3.0)
-            add_trophy()
         if money >= 1000000:
             clicked = True
             clock.schedule(hide_text, 3.0)
-            add_trophy()

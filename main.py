@@ -103,6 +103,10 @@ class Keyboard:
     def left(self):
         return self._keys[pygame.K_LEFT]
 
+    @property
+    def down(self):
+        return self._keys[pygame.K_DOWN]
+
 
 game.screen = ScreenShim(screen)
 game.Actor = Actor
