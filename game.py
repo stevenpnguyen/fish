@@ -65,7 +65,8 @@ def draw():
         fish.draw()
     if fish2.x != -1000:
         fish2.draw()
-    screen.draw.text("money:  " + str(money), color="green", bottomleft=(10, 990))
+    if fish2.x != -1000:
+        screen.draw.text("money:  " + str(money), color="green", bottomleft=(10, 990))
     if clicked:
         screen.draw.text(message, (300, 10), fontsize=30, color="black")
     if show_trophy:
@@ -77,6 +78,8 @@ def draw():
 
 
 def update():
+    if bg is None:
+        init()
     if keyboard.right:
         fox.x += 5
     elif keyboard.left:

@@ -108,11 +108,17 @@ class Keyboard:
         return self._keys[pygame.K_DOWN]
 
 
+class Sounds:
+    def __init__(self):
+        self.coin = pygame.mixer.Sound("sounds/coin.ogg")
+
+
 game.screen = ScreenShim(screen)
 game.Actor = Actor
 keyboard = Keyboard()
 game.keyboard = keyboard
 game.clock = GameClock()
+game.sounds = Sounds()
 
 game.init()
 
