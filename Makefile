@@ -1,4 +1,4 @@
-.PHONY: build serve clean install run
+.PHONY: build build-exe serve clean install run
 
 PORT ?= 8000
 
@@ -11,6 +11,9 @@ run:
 build: install
 	python -m pygbag --build .
 	cp CNAME build/web/CNAME
+
+build-exe: install
+	pyinstaller --clean --noconfirm fish.spec
 
 serve: install
 	@exec python -m pygbag .

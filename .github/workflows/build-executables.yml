@@ -1,0 +1,45 @@
+name: Build desktop executables
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact_name: fish-linux
+            asset_name: fish-linux
+            extension: ""
+          - os: windows-latest
+            artifact_name: fish-windows
+            asset_name: fish-windows
+            extension: ".exe"
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install make (Windows)
+        if: runner.os == 'Windows'
+        run: pip install make
+
+      - name: Build executable
+        run: make build-exe
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: dist/fish${{ matrix.extension }}
+          if-no-files-found: error
