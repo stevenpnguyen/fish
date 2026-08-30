@@ -8,9 +8,11 @@ WIDTH = 1750
 HEIGHT = 1000
 CENTRE_X = WIDTH / 2
 CENTRE_Y = HEIGHT / 2
-money = 0
+money = -100
 clicked = False
+show = True
 message = "You have unlocked this achievement"
+message2 = "You are in debt, click the fish to gain money, avoid the sea snake if you don't want to loose what you earned, and get to level 2 at $10,000(you can achieve up to 4 trophies)!!!"
 show_trophy = False
 bg = pygame.transform.scale(pygame.image.load("images/ocean.png").convert(), (WIDTH, HEIGHT))
 bg2 = pygame.transform.scale(pygame.image.load("images/ocean_l2.jpg").convert(), (WIDTH, HEIGHT))
@@ -18,31 +20,31 @@ first_trophy = False
 second_trophy = False
 third_trophy = False
 fourth_trophy = False
-fox = Actor("penguin")
-fox.pos = (875, 300)
-fish = Actor("fish")
-fish2 = Actor("fish2")
-fish2.pos = (random.randint(0, 1750), random.randint(500, 1000))
-fish.pos = (random.randint(0, 1750), random.randint(500, 1000))
+sea_snake = Actor("sea-snake.png")
+sea_snake.pos = (random.randint(0, 1750), random.randint(500, 1000))
 whale = Actor("whale.png")
-penguin = Actor("penguin_sliding.png")
-trophy = Actor("trophy")
 whale.pos = (random.randint(0, 1750), random.randint(500, 1000))
+penguin = Actor("penguin_sliding.png")
 penguin.pos = (random.randint(0, 1750), random.randint(500, 1000))
-
+fish = Actor("fish.png")
+fish.pos = (random.randint(0, 1750), random.randint(500, 1000))
+fish2 = Actor("fish2.png")
+fish2.pos = (random.randint(0, 1750), random.randint(500, 1000))
 trophy_no = 0
 fish_no = 1
-
+trophy = Actor("trophy.png")
 def draw():
     global trophy_no
     screen.blit(bg, (0, 0))
-    fox.draw()
+    sea_snake.draw()
     fish2.draw()
     fish.draw()
-    if fish2.x != -1000:
-        screen.draw.text("money:  " + str(money), color="green", bottomleft=(10, 990))
+    if show:
+        screen.draw.text(message2, (10, 10), fontsize=30, color="red")
+
+    screen.draw.text("money:  " + str(money), fontsize=50, color="red", bottomleft=(10, 990))
     if clicked:
-        screen.draw.text(message, (300, 10), fontsize=30, color="black")
+        screen.draw.text(message, (875, 100), fontsize=30, color="red")
     if show_trophy == True:
         trophy_x = 1700;
         for no in range(trophy_no):
@@ -50,17 +52,15 @@ def draw():
             trophy.pos = (trophy_x, 50)
             trophy_x = trophy_x - 100
 
-    if money >= 10000:
+    if money >= 1000:
         screen.blit(bg2, (0, 0))
         whale.draw()
         penguin.draw()
+        screen.draw.text("money:  " + str(money), fontsize=50, color="red", bottomleft=(10, 990))
 
-    fox.draw()
-
+    sea_snake.draw()
     fish2.draw()
     fish.draw()
-    if fish2.x != -1000:
-        screen.draw.text("money:  " + str(money), color="green", bottomleft=(10, 990))
     if clicked:
         screen.draw.text(message, (300, 10), fontsize=30, color="black")
     if show_trophy == True:
@@ -71,16 +71,14 @@ def draw():
             trophy_x = trophy_x - 100
 
 def update():
-    if keyboard.right:
-        fox.x += 5
-    elif keyboard.left:
-        fox.x -= 5
-    elif keyboard.down:
-        fox.y += 5
+
     fish.x -= 1
     fish2.x -= 2
-    whale.x += 4
-    penguin.x -= 3
+    whale.x += 3.2
+    penguin.x -= 2.9
+    sea_snake.x -= 2
+
+    clock.schedule(hide_text2, 50.0)
 
 def hide_fish():
     fish.x = -1000
@@ -98,6 +96,10 @@ def hide_penguin():
     penguin.x = -1000
     clock.schedule(show_penguin, 2.0)
 
+def hide_sea_snake():
+    sea_snake.x = -1000
+    clock.schedule(show_sea_snake, 2.0)
+
 def show_fish():
     fish.pos = (random.randint(0, 1750), random.randint(500, 1000))
     clock.schedule(hide_fish, 5.0)
@@ -113,6 +115,14 @@ def show_whale():
 def show_penguin():
     penguin.pos = (random.randint(0, 1750), random.randint(500, 1000))
     clock.schedule(hide_penguin, 2.5)
+
+def show_sea_snake():
+    sea_snake.pos = (random.randint(0, 1750), random.randint(500, 1000))
+    clock.schedule(hide_sea_snake, 3.5)
+
+def hide_text2():
+    global show
+    show = False
 
 def hide_text():
     global clicked
@@ -138,7 +148,8 @@ def on_mouse_down(pos):
     if fish2.collidepoint(pos):
         sounds.coin.play()
         money = money + (random.randint(50, 500))
-        fish2.pos = (random.randint(10, 1740), random.randint(340, 990))
+        fish2.x -= 1 + 0.5
+        fish2.pos = (random.randint(10, 1740), random.randint(330, 990))
         if money >= 5000:
             if not first_trophy:
                 clicked = True
@@ -146,21 +157,21 @@ def on_mouse_down(pos):
                 add_trophy()
                 first_trophy = True
                 show_trophy = True
-        if money >= 50000:
+        if money >= 10000:
             if not second_trophy:
                 clicked = True
                 clock.schedule(hide_text, 3.0)
                 add_trophy()
                 second_trophy = True
                 show_trophy = True
-        if money >= 500000:
+        if money >= 15000:
             if not third_trophy:
                 clicked = True
                 clock.schedule(hide_text, 3.0)
                 add_trophy()
                 third_trophy = True
                 show_trophy = True
-        if money >= 1000000:
+        if money >= 20000:
             if not fourth_trophy:
                 clicked = True
                 clock.schedule(hide_text, 3.0)
@@ -172,6 +183,7 @@ def on_mouse_down(pos):
         sounds.coin.play()
         money = money + (random.randint(25, 350))
         fish.pos = (random.randint(10, 1740), random.randint(340, 990))
+        fish.x -= 0.5 + 0.5
         if money >= 5000:
             if not first_trophy:
                 clicked = True
@@ -179,21 +191,21 @@ def on_mouse_down(pos):
                 add_trophy()
                 first_trophy = True
                 show_trophy = True
-        if money >= 50000:
+        if money >= 10000:
             if not second_trophy:
                 clicked = True
                 clock.schedule(hide_text, 3.0)
                 add_trophy()
                 second_trophy = True
                 show_trophy = True
-        if money >= 500000:
+        if money >= 15000:
             if not third_trophy:
                 clicked = True
                 clock.schedule(hide_text, 3.0)
                 add_trophy()
                 third_trophy = True
                 show_trophy = True
-        if money >= 1000000:
+        if money >= 20000:
             if not fourth_trophy:
                 clicked = True
                 clock.schedule(hide_text, 3.0)
@@ -205,21 +217,21 @@ def on_mouse_down(pos):
         sounds.coin.play()
         money = money + (random.randint(600, 3500))
         whale.pos = (random.randint(10, 1740), random.randint(340, 990))
-        if money >= 50000:
+        if money >= 10000:
             if not second_trophy:
                 clicked = True
                 clock.schedule(hide_text, 3.0)
                 add_trophy()
                 second_trophy = True
                 show_trophy = True
-        if money >= 500000:
+        if money >= 15000:
             if not third_trophy:
                 clicked = True
                 clock.schedule(hide_text, 3.0)
                 add_trophy()
                 third_trophy = True
                 show_trophy = True
-        if money >= 1000000:
+        if money >= 20000:
             if not fourth_trophy:
                 clicked = True
                 clock.schedule(hide_text, 3.0)
@@ -231,21 +243,21 @@ def on_mouse_down(pos):
         sounds.coin.play()
         money = money + (random.randint(500, 2540))
         penguin.pos = (random.randint(10, 1740), random.randint(340, 990))
-        if money >= 50000:
+        if money >= 10000:
             if not second_trophy:
                 clicked = True
                 clock.schedule(hide_text, 3.0)
                 add_trophy()
                 second_trophy = True
                 show_trophy = True
-        if money >= 500000:
+        if money >= 15000:
             if not third_trophy:
                 clicked = True
                 clock.schedule(hide_text, 3.0)
                 add_trophy()
                 third_trophy = True
                 show_trophy = True
-        if money >= 1000000:
+        if money >= 20000:
             if not fourth_trophy:
                 clicked = True
                 clock.schedule(hide_text, 3.0)
@@ -253,8 +265,14 @@ def on_mouse_down(pos):
                 fourth_trophy = True
                 show_trophy = True
 
+    if sea_snake.collidepoint(pos):
+        sounds.coin.play()
+        money = money - (random.randint(25, 540))
+        sea_snake.pos = (random.randint(10, 1740), random.randint(340, 990))
+
 clock.schedule(hide_fish, 5.0)
 clock.schedule(hide_fish2, 3.0)
 clock.schedule(hide_whale, 1.9)
 clock.schedule(hide_penguin, 2.5)
+clock.schedule(hide_sea_snake, 3.5)
 
