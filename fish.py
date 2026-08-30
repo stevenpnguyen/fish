@@ -14,22 +14,22 @@ show = True
 message = "You have unlocked this achievement"
 message2 = "You are in debt, click the fish to gain money, avoid the sea snake if you don't want to loose what you earned, and get to level 2 at $10,000(you can achieve up to 4 trophies)!!!"
 show_trophy = False
-bg = pygame.transform.scale(pygame.image.load("images/ocean.png").convert(), (WIDTH, HEIGHT))
+bg = pygame.transform.scale(pygame.image.load("images/ocean.jpg").convert(), (WIDTH, HEIGHT))
 bg2 = pygame.transform.scale(pygame.image.load("images/ocean_l2.jpg").convert(), (WIDTH, HEIGHT))
 first_trophy = False
 second_trophy = False
 third_trophy = False
 fourth_trophy = False
 sea_snake = Actor("sea-snake.png")
-sea_snake.pos = (random.randint(0, 1750), random.randint(500, 1000))
+sea_snake.pos = (random.randint(0, 1750), random.randint(0, 1000))
 whale = Actor("whale.png")
-whale.pos = (random.randint(0, 1750), random.randint(500, 1000))
+whale.pos = (random.randint(0, 1750), random.randint(0, 1000))
 penguin = Actor("penguin_sliding.png")
-penguin.pos = (random.randint(0, 1750), random.randint(500, 1000))
+penguin.pos = (random.randint(0, 1750), random.randint(0, 1000))
 fish = Actor("fish.png")
-fish.pos = (random.randint(0, 1750), random.randint(500, 1000))
+fish.pos = (random.randint(0, 1750), random.randint(0, 1000))
 fish2 = Actor("fish2.png")
-fish2.pos = (random.randint(0, 1750), random.randint(500, 1000))
+fish2.pos = (random.randint(0, 1750), random.randint(0, 1000))
 trophy_no = 0
 fish_no = 1
 trophy = Actor("trophy.png")
@@ -40,7 +40,7 @@ def draw():
     fish2.draw()
     fish.draw()
     if show:
-        screen.draw.text(message2, (10, 10), fontsize=30, color="red")
+        screen.draw.text(message2, (10, 10), fontsize=30, color="green")
 
     screen.draw.text("money:  " + str(money), fontsize=50, color="red", bottomleft=(10, 990))
     if clicked:
@@ -52,7 +52,7 @@ def draw():
             trophy.pos = (trophy_x, 50)
             trophy_x = trophy_x - 100
 
-    if money >= 1000:
+    if money >= 10000:
         screen.blit(bg2, (0, 0))
         whale.draw()
         penguin.draw()
