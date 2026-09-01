@@ -14,7 +14,6 @@ show_trophy = False
 
 bg = None
 bg2 = None
-fox = None
 fish = None
 fish2 = None
 whale = None
@@ -29,15 +28,13 @@ fourth_trophy = False
 
 
 def init():
-    global bg, bg2, fox, fish, fish2, whale, penguin, sea_snake, trophy
+    global bg, bg2, fish, fish2, whale, penguin, sea_snake, trophy
     bg = pygame.transform.scale(
         pygame.image.load("images/ocean.jpg").convert(), (WIDTH, HEIGHT)
     )
     bg2 = pygame.transform.scale(
         pygame.image.load("images/ocean_l2.jpg").convert(), (WIDTH, HEIGHT)
     )
-    fox = Actor("penguin")
-    fox.pos = (875, 300)
     fish = Actor("fish")
     fish.pos = (random.randint(0, 1750), random.randint(0, 1000))
     fish2 = Actor("fish2")
@@ -68,7 +65,6 @@ def draw():
             whale.draw()
         if penguin.x != -1000:
             penguin.draw()
-    fox.draw()
     if sea_snake.x != -1000:
         sea_snake.draw()
     if fish.x != -1000:
@@ -79,7 +75,7 @@ def draw():
         "money:  " + str(money), fontsize=50, color="red", bottomleft=(10, 990)
     )
     if clicked:
-        screen.draw.text(message, (300, 10), fontsize=30, color="black")
+        screen.draw.text(message, (875, 100), fontsize=50, color="green")
     if show_trophy:
         trophy_x = 1700
         for no in range(trophy_no):
@@ -91,12 +87,6 @@ def draw():
 def update():
     if bg is None:
         init()
-    if keyboard.right:
-        fox.x += 5
-    elif keyboard.left:
-        fox.x -= 5
-    elif keyboard.down:
-        fox.y += 5
     fish.x -= 1
     fish2.x -= 2
     whale.x += 3.2
