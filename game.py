@@ -296,6 +296,6 @@ def on_mouse_down(pos):
                 show_trophy = True
 
     if sea_snake.collidepoint(pos):
-        sounds.coin.play()
+        sounds.wrong.play()
         money = money - (random.randint(25, 540))
         sea_snake.pos = (random.randint(10, 1740), random.randint(340, 990))

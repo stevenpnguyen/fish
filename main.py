@@ -111,6 +111,7 @@ class Keyboard:
 class Sounds:
     def __init__(self):
         self.coin = pygame.mixer.Sound("sounds/coin.ogg")
+        self.wrong = pygame.mixer.Sound("sounds/wrong.ogg")
 
 
 game.screen = ScreenShim(screen)
