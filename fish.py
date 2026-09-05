@@ -148,7 +148,7 @@ def on_mouse_down(pos):
     global fourth_trophy
     if fish2.collidepoint(pos):
         sounds.coin.play()
-        money = money + (random.randint(50, 500))
+        money = money + (random.randint(50, 1000))
         fish2.x -= 1 + 0.5
         fish2.pos = (random.randint(10, 1740), random.randint(330, 990))
         if money >= 5000:
@@ -182,7 +182,7 @@ def on_mouse_down(pos):
 
     if fish.collidepoint(pos):
         sounds.coin.play()
-        money = money + (random.randint(25, 350))
+        money = money + (random.randint(25, 500))
         fish.pos = (random.randint(10, 1740), random.randint(340, 990))
         fish.x -= 0.5 + 0.5
         if money >= 5000:
