@@ -1,8 +1,10 @@
 import random
 import time
 import pygame
+from playsound import playsound
 
 pygame.init()
+
 
 WIDTH = 1000
 HEIGHT = 700
@@ -265,7 +267,7 @@ def on_mouse_down(pos):
                 show_trophy = True
 
     if sea_snake.collidepoint(pos):
-        sounds.coin.play()
+        sounds.wrong.play()
         money = money - (random.randint(25, 540))
         sea_snake.pos = (random.randint(10, 1740), random.randint(340, 990))
 
