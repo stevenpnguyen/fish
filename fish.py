@@ -1,10 +1,8 @@
 import random
 import time
 import pygame
-from playsound import playsound
 
 pygame.init()
-
 
 WIDTH = 1000
 HEIGHT = 700
