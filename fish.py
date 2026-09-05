@@ -4,15 +4,15 @@ import pygame
 
 pygame.init()
 
-WIDTH = 1750
-HEIGHT = 1000
+WIDTH = 1000
+HEIGHT = 700
 CENTRE_X = WIDTH / 2
 CENTRE_Y = HEIGHT / 2
 money = -100
 clicked = False
 show = True
 message = "You have unlocked this achievement"
-message2 = "You are in debt, click the fish to gain money, avoid the sea snake if you don't want to loose what you earned, and get to level 2 at $10,000(you can achieve up to 4 trophies)!!!"
+message2 = "Click the fish avoid the sea snake goal get to level 2 achieve up to 4 trophies for every 5000"
 show_trophy = False
 bg = pygame.transform.scale(pygame.image.load("images/ocean.jpg").convert(), (WIDTH, HEIGHT))
 bg2 = pygame.transform.scale(pygame.image.load("images/ocean_l2.jpg").convert(), (WIDTH, HEIGHT))
@@ -21,15 +21,15 @@ second_trophy = False
 third_trophy = False
 fourth_trophy = False
 sea_snake = Actor("sea-snake.png")
-sea_snake.pos = (random.randint(0, 1750), random.randint(0, 1000))
+sea_snake.pos = (random.randint(0, WIDTH), random.randint(0, 700))
 whale = Actor("whale.png")
-whale.pos = (random.randint(0, 1750), random.randint(0, 1000))
+whale.pos = (random.randint(0, 1000), random.randint(0, 700))
 penguin = Actor("penguin_sliding.png")
-penguin.pos = (random.randint(0, 1750), random.randint(0, 1000))
+penguin.pos = (random.randint(0, 1000), random.randint(0, 700))
 fish = Actor("fish.png")
-fish.pos = (random.randint(0, 1750), random.randint(0, 1000))
+fish.pos = (random.randint(0, 1000), random.randint(0, 700))
 fish2 = Actor("fish2.png")
-fish2.pos = (random.randint(0, 1750), random.randint(0, 1000))
+fish2.pos = (random.randint(0, 1000), random.randint(0, 700))
 trophy_no = 0
 fish_no = 1
 trophy = Actor("trophy.png")
@@ -42,11 +42,10 @@ def draw():
     if show:
         screen.draw.text(message2, (10, 10), fontsize=30, color="green")
 
-    screen.draw.text("money:  " + str(money), fontsize=50, color="red", bottomleft=(10, 990))
-    if clicked:
-        screen.draw.text(message, (875, 100), fontsize=30, color="red")
+    screen.draw.text("money:  " + str(money), fontsize=50, color="red", bottomleft=(10, 690))
+
     if show_trophy == True:
-        trophy_x = 1700;
+        trophy_x = WIDTH - 50;
         for no in range(trophy_no):
             trophy.draw()
             trophy.pos = (trophy_x, 50)
@@ -56,15 +55,15 @@ def draw():
         screen.blit(bg2, (0, 0))
         whale.draw()
         penguin.draw()
-        screen.draw.text("money:  " + str(money), fontsize=50, color="red", bottomleft=(10, 990))
+        screen.draw.text("money:  " + str(money), fontsize=50, color="red", bottomleft=(10, 690))
+        if clicked:
+            screen.draw.text(message, (500, 50), fontsize=30, color="red")
 
     sea_snake.draw()
     fish2.draw()
     fish.draw()
-    if clicked:
-        screen.draw.text(message, (300, 10), fontsize=30, color="black")
     if show_trophy == True:
-        trophy_x = 1700;
+        trophy_x = WIDTH - 50;
         for no in range(trophy_no):
             trophy.draw()
             trophy.pos = (trophy_x, 50)
@@ -101,23 +100,23 @@ def hide_sea_snake():
     clock.schedule(show_sea_snake, 2.0)
 
 def show_fish():
-    fish.pos = (random.randint(0, 1750), random.randint(500, 1000))
+    fish.pos = (random.randint(0, 1000), random.randint(0, 700))
     clock.schedule(hide_fish, 5.0)
 
 def show_fish2():
-    fish2.pos = (random.randint(0, 1750), random.randint(500, 1000))
+    fish2.pos = (random.randint(0, 1000), random.randint(0, 700))
     clock.schedule(hide_fish2, 3.0)
 
 def show_whale():
-    whale.pos = (random.randint(0, 1750), random.randint(500, 1000))
+    whale.pos = (random.randint(0, WIDTH), random.randint(0, HEIGHT))
     clock.schedule(hide_whale, 1.9)
 
 def show_penguin():
-    penguin.pos = (random.randint(0, 1750), random.randint(500, 1000))
+    penguin.pos = (random.randint(0, WIDTH), random.randint(0, HEIGHT))
     clock.schedule(hide_penguin, 2.5)
 
 def show_sea_snake():
-    sea_snake.pos = (random.randint(0, 1750), random.randint(500, 1000))
+    sea_snake.pos = (random.randint(0, WIDTH), random.randint(0, HEIGHT))
     clock.schedule(hide_sea_snake, 3.5)
 
 def hide_text2():
